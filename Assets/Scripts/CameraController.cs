@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
     }
 }*/
 
-using UnityEngine;
+/*using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
@@ -42,6 +42,44 @@ public class CameraController : MonoBehaviour
             transform.LookAt(target);
         }
     }
+}*/
+
+using UnityEngine;
+
+public class CameraController : MonoBehaviour
+{
+    public Transform target; // Цель для камеры
+    public float distance = 10f; // Расстояние от камеры до цели
+    public float height = 5f; // Высота камеры относительно цели
+    public float cameraSpeed = 2f; // Скорость сглаживания камеры
+    public float targetSwitchSpeed = 2f; // Скорость плавного переключения цели
+
+    private Vector3 targetPosition; // Плавная позиция для камеры
+
+    void LateUpdate()
+    {
+        if (target == null && CrowdManager.Instance.crowdMembers.Count > 0)
+        {
+            // Если текущий лидер погибает, переключаемся на следующего персонажа в толпе
+            target = CrowdManager.Instance.crowdMembers[0].transform;
+        }
+
+        if (target != null)
+        {
+            // Рассчитываем желаемую позицию для камеры
+            Vector3 desiredPosition = target.position + new Vector3(0, height, -distance);
+
+            // Плавно перемещаем камеру к новой позиции
+            transform.position = Vector3.Lerp(transform.position, desiredPosition, cameraSpeed * Time.deltaTime);
+
+            // Плавно перемещаем камеру на новую цель (перемещение к новому лидеру)
+            targetPosition = Vector3.Lerp(targetPosition, target.position, targetSwitchSpeed * Time.deltaTime);
+
+            // Камера всегда смотрит на плавно обновляемую цель
+            transform.LookAt(targetPosition);
+        }
+    }
 }
+
 
 
