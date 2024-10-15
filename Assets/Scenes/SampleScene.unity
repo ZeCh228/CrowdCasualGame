@@ -150,9 +150,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 11417994}
   serializedVersion: 4
-  m_Mass: 15
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 250
+  m_Drag: 1
+  m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -168,7 +168,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 4
-  m_CollisionDetection: 3
+  m_CollisionDetection: 0
 --- !u!65 &11417996
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -176,7 +176,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 11417994}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: a200b49f61827d744ab0b87e8e43faa8, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -309,7 +309,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 23663235}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: a200b49f61827d744ab0b87e8e43faa8, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -420,7 +420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc34789ecf2b8d5419b0ccc9fb73907c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followerPrefab: {fileID: 532790757}
+  followerPrefab: {fileID: 7039198112567985324, guid: 68bdc21e2020cfb46941381893a3f6cd, type: 3}
   numberOfFollowersToAdd: 3
 --- !u!65 &150964468
 BoxCollider:
@@ -540,7 +540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc34789ecf2b8d5419b0ccc9fb73907c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followerPrefab: {fileID: 532790757}
+  followerPrefab: {fileID: 7039198112567985324, guid: 68bdc21e2020cfb46941381893a3f6cd, type: 3}
   numberOfFollowersToAdd: 3
 --- !u!65 &253106331
 BoxCollider:
@@ -636,6 +636,11 @@ GameObject:
 --- !u!4 &532790761 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 675260246018081664, guid: 68bdc21e2020cfb46941381893a3f6cd, type: 3}
+  m_PrefabInstance: {fileID: 1970655118951946956}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &532790763 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 516460936556267578, guid: 68bdc21e2020cfb46941381893a3f6cd, type: 3}
   m_PrefabInstance: {fileID: 1970655118951946956}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
@@ -1216,7 +1221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc34789ecf2b8d5419b0ccc9fb73907c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followerPrefab: {fileID: 532790757}
+  followerPrefab: {fileID: 7039198112567985324, guid: 68bdc21e2020cfb46941381893a3f6cd, type: 3}
   numberOfFollowersToAdd: 3
 --- !u!65 &1477432497
 BoxCollider:
@@ -1336,7 +1341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc34789ecf2b8d5419b0ccc9fb73907c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followerPrefab: {fileID: 532790757}
+  followerPrefab: {fileID: 7039198112567985324, guid: 68bdc21e2020cfb46941381893a3f6cd, type: 3}
   numberOfFollowersToAdd: 3
 --- !u!65 &1510533426
 BoxCollider:
@@ -1573,10 +1578,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dcdbeb1d173c4148b78ab07730a3878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
+  speed: 10
   followDistance: 1.5
   crowdMembers:
-  - {fileID: 532790757}
+  - {fileID: 532790763}
   repuls: 10
 --- !u!1 &1615460550
 GameObject:
@@ -1709,7 +1714,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1809424897}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: a200b49f61827d744ab0b87e8e43faa8, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1949,10 +1954,6 @@ PrefabInstance:
     - target: {fileID: 7039198112567985324, guid: 68bdc21e2020cfb46941381893a3f6cd, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8012386736543827233, guid: 68bdc21e2020cfb46941381893a3f6cd, type: 3}
-      propertyPath: speed
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -15,9 +15,9 @@ public class FatalObstacle : MonoBehaviour
     void RemoveFromCrowd(GameObject character)
     {
         // Удаляем персонажа из списка толпы в CrowdManager
-        if (CrowdManager.Instance.crowdMembers.Contains(character))
+        if (CrowdManager.Instance.crowdMembers.Contains(character.GetComponent<Rigidbody>()))
         {
-            CrowdManager.Instance.crowdMembers.Remove(character);
+            CrowdManager.Instance.crowdMembers.Remove(character.GetComponent<Rigidbody>());
         }
 
         // Уничтожаем персонажа (можно добавить анимацию исчезновения или эффект)

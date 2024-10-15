@@ -22,7 +22,7 @@ public class Bonus : MonoBehaviour
             spawnPosition.y = followerPrefab.transform.position.y; // Чтобы персонажи не проваливались под землю
 
             GameObject newFollower = Instantiate(followerPrefab, spawnPosition, Quaternion.identity);
-            CrowdManager.Instance.AddToCrowd(newFollower);
+            CrowdManager.Instance.AddToCrowd(newFollower.GetComponent<Rigidbody>());
         }
     }
 }

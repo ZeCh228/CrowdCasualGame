@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 7172382258766372034}
   - component: {fileID: 516460936556267578}
   - component: {fileID: 8012386736543827233}
+  - component: {fileID: 6940270156843266894}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -96,7 +97,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bc4d86d483b30cf40bbb6c917fda06ab, type: 2}
+  - {fileID: 2100000, guid: 57a50e1377d69b54ab79e28360a9c67e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -164,7 +165,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 2
 --- !u!114 &8012386736543827233
 MonoBehaviour:
@@ -179,3 +180,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+--- !u!114 &6940270156843266894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7039198112567985324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 288c976d832d30747bd392696c9dac85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 0, b: 0, a: 1}
+  rb: {fileID: 516460936556267578}
