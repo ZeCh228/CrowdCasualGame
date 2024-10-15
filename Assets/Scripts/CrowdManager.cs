@@ -121,14 +121,15 @@ public class CrowdManager : MonoBehaviour
 {
     public float speed = 5f; // Скорость движения толпы
     public float followDistance = 1.5f; // Минимальное расстояние между членами толпы
-    //public List<GameObject> crowdMembers = new List<GameObject>(); // Список всех персонажей в толпе
     public List<Rigidbody> crowdMembers = new List<Rigidbody>(); // Список всех персонажей в толпе
     public static CrowdManager Instance; // Singleton для глобального доступа
 
     [SerializeField] private float repuls;
+    private EntityCounter entityCounter;
     Vector3 target = Vector3.zero;
 
     bool isNeedToStopCrowd = false;
+
     void Awake()
     {
         // Singleton
@@ -140,16 +141,19 @@ public class CrowdManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        // crowdMembers[0].GetComponent<Avoider>().Construct(true);
+        entityCounter = FindObjectOfType<EntityCounter>();
     }
+
     public bool IsLeader(GameObject member)
     {
-        //Дописать после того как  утебя появистя смена лидера
+        // Логика проверки, является ли член толпы лидером
         return false;
     }
+
     void Update()
     {
+        if (crowdMembers.Count == 0) return; // Проверка на наличие членов толпы
+
         // Проверяем, удерживается ли левая кнопка мыши
         if (Input.GetMouseButton(0))
         {
@@ -160,33 +164,38 @@ public class CrowdManager : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 target = hit.point;
-
                 target = new Vector3(target.x, 0, target.z);
+
                 // Двигаем первого персонажа к курсору
-                MoveToTarget(crowdMembers[0].gameObject, target);
-                if (isNeedToStopCrowd)
+                if (crowdMembers.Count > 0)
                 {
-                    return;
+                    MoveToTarget(crowdMembers[0].gameObject, target);
                 }
+
+                if (isNeedToStopCrowd) return;
+
                 // Заставляем остальных следовать за предыдущими членами толпы
                 for (int i = 1; i < crowdMembers.Count; i++)
                 {
                     MoveToTarget(crowdMembers[i].gameObject, target);
-                    //     AvoidOthers(crowdMembers[i].gameObject); // Избегаем столкновений с другими
+                }
+            }
+        }
+        else if (target != Vector3.zero)
+        {
+            // Проверка, что толпа не пуста, чтобы двигать персонажей
+            if (crowdMembers.Count > 0)
+            {
+                MoveToTarget(crowdMembers[0].gameObject, target);
+
+                for (int i = 1; i < crowdMembers.Count; i++)
+                {
+                    MoveToTarget(crowdMembers[i].gameObject, target);
                 }
             }
         }
 
-        else if (target != Vector3.zero)
-        {
-            MoveToTarget(crowdMembers[0].gameObject, target);
-            // Для каждого последующего члена толпы назначаем цель следования за предыдущим
-            for (int i = 1; i < crowdMembers.Count; i++)
-            {
-                MoveToTarget(crowdMembers[i].gameObject, target);
-            }
 
-        }
     }
 
     // Функция для перемещения персонажа к цели
@@ -196,71 +205,44 @@ public class CrowdManager : MonoBehaviour
         direction.y = 0;
         float distance = Vector3.Distance(follower.transform.position, new Vector3(targetPosition.x, follower.transform.position.y, targetPosition.z));
 
-        print("dist " + distance);
-        // Двигаем персонажа только если дистанция больше минимальной
-
         if (distance > followDistance)
         {
             isNeedToStopCrowd = false;
-
-            //follower.transform.position += direction * speed * Time.deltaTime;
             follower.GetComponent<Rigidbody>().velocity = direction.magnitude > 1 ? direction.normalized * speed : direction * speed;
-            //print("Magn " + follower.GetComponent<Rigidbody>().velocity.magnitude);
         }
-        else if (follower == crowdMembers[0] && distance <= 0.1f)//после сены лидера, здесь подставлять переменную лидера
-        {/*
-            if (follower == crowdMembers[0].gameObject)
-            {
-                //isNeedToStopCrowd = true;
-            }*/
+        else if (follower == crowdMembers[0] && distance <= 0.1f)
+        {
             follower.GetComponent<Rigidbody>().velocity = Vector3.zero;
             follower.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         }
-        else if (follower != crowdMembers[0] && distance <= CalculateDistance())//после сены лидера, здесь подставлять переменную лидера
-        {/*
-            if (follower == crowdMembers[0].gameObject)
-            {
-                //isNeedToStopCrowd = true;
-            }*/
+        else if (follower != crowdMembers[0] && distance <= CalculateDistance())
+        {
             follower.GetComponent<Rigidbody>().velocity = Vector3.zero;
             follower.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         }
     }
+
     private float CalculateDistance()
     {
-        if (crowdMembers.Count <= 7)
-        {
-            return 1.5f;
-        }
-        else if (crowdMembers.Count <= 14)
-        {
-            return 30f;
-        }
-        else if (crowdMembers.Count <= 35)
-        {
-            return 80f;
-        }
+        if (crowdMembers.Count <= 7) return 1.5f;
+        else if (crowdMembers.Count <= 14) return 30f;
+        else if (crowdMembers.Count <= 35) return 80f;
 
         return 0.1f;
     }
+
     // Метод для предотвращения столкновений с другими персонажами
     void AvoidOthers(GameObject follower)
     {
         foreach (Rigidbody member in crowdMembers)
         {
-            if (member != follower)
+            if (member.gameObject != follower)
             {
                 float distance = Vector3.Distance(follower.transform.position, member.transform.position);
                 if (distance < followDistance)
                 {
                     Vector3 repulsion = (follower.transform.position - member.transform.position).normalized;
-                    //float repulsionStrength = Mathf.Clamp(followDistance - distance, 0, 1);
-
-                    // Отталкивание только в плоскости XZ
-                    //Vector3 repulsionForce = new Vector3(repulsion.x, 0, repulsion.z) * repulsionStrength * Time.deltaTime;
-                    Vector3 repulsionForce = new Vector3(repulsion.x, 0, repulsion.z) * repuls; /** Time.deltaTime*/
-
-                    //follower.transform.position += repulsionForce;
+                    Vector3 repulsionForce = new Vector3(repulsion.x, 0, repulsion.z) * repuls;
                     follower.GetComponent<Rigidbody>().velocity += repulsionForce;
                 }
             }
@@ -271,5 +253,29 @@ public class CrowdManager : MonoBehaviour
     public void AddToCrowd(Rigidbody newMember)
     {
         crowdMembers.Add(newMember);
+        entityCounter.UpdateEntityCount(); // Обновляем счетчик после добавления
+    }
+
+    // Удаление персонажа из толпы
+    public void RemoveFromCrowd(GameObject character)
+    {
+        Rigidbody rb = character.GetComponent<Rigidbody>();
+
+        if (crowdMembers.Contains(rb))
+        {
+            crowdMembers.Remove(rb);
+            entityCounter.UpdateEntityCount();
+            Debug.Log("Персонаж удален. Осталось персонажей: " + crowdMembers.Count);
+
+            // После удаления персонажа проверяем на проигрыш
+            GameOverManager gameOverManager = FindObjectOfType<GameOverManager>();
+            if (gameOverManager != null)
+            {
+                gameOverManager.CheckForGameOver();
+            }
+        }
+
+        Destroy(character);
     }
 }
+

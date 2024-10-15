@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 public class FatalObstacle : MonoBehaviour
 {
@@ -22,5 +22,22 @@ public class FatalObstacle : MonoBehaviour
 
         // Уничтожаем персонажа (можно добавить анимацию исчезновения или эффект)
         Destroy(character);
+    }
+}
+*/
+
+using UnityEngine;
+
+public class FatalObstacle : MonoBehaviour
+{
+    // Когда персонаж входит в триггер
+    void OnTriggerEnter(Collider other)
+    {
+        // Проверяем, что это персонаж (например, по тегу "Player")
+        if (other.CompareTag("Player"))
+        {
+            // Вызываем метод удаления персонажа из CrowdManager
+            CrowdManager.Instance.RemoveFromCrowd(other.gameObject);
+        }
     }
 }
