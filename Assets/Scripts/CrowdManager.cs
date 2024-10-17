@@ -275,7 +275,7 @@ public class CrowdManager : MonoBehaviour
             }
         }
 
-        Destroy(character);
+        character.SetActive(false);
     }
 }
 

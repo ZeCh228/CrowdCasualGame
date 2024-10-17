@@ -70,3 +70,9 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+Assets/Allsky/Anime/Anime Night/Anime Night Equirect.png
+FirstBuild/NewCasualGame_Data/sharedassets0.assets.resS
+FirstBuild/NewCasualGame_Data/sharedassets1.assets.resS
+TwoBuild/NewCasualGame_Data/sharedassets0.assets.resS
+TwoBuild/NewCasualGame_Data/sharedassets1.assets.resS
+
