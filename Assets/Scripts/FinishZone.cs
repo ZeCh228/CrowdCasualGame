@@ -4,43 +4,42 @@ using System.Collections;
 
 public class FinishZone : MonoBehaviour
 {
-    public float suckSpeed = 5f; // Скорость засасывания персонажей
-    public Transform suckTarget; // Точка, куда персонажи будут засасываться (центр финиша)
-
-    private List<Transform> charactersInZone = new List<Transform>(); // Список всех персонажей в зоне
+    public float suckSpeed = 5f; 
+    public Transform suckTarget; 
+    private List<Transform> charactersInZone = new List<Transform>();
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            charactersInZone.Add(other.transform); // Добавляем персонажа в список
+            charactersInZone.Add(other.transform); 
             StartCoroutine(SuckCharacter(other.transform));
         }
     }
 
-    // Засасываем персонажа к центру
+    
     IEnumerator SuckCharacter(Transform character)
     {
         while (Vector3.Distance(character.position, suckTarget.position) > 0.1f)
         {
             character.position = Vector3.MoveTowards(character.position, suckTarget.position, suckSpeed * Time.deltaTime);
-            yield return null; // Ждем следующий кадр
+            yield return null; 
         }
 
-        // Деактивируем персонажа, когда он достиг цели
+        
         character.gameObject.SetActive(false);
     }
 
-    // Метод для проверки, засосало ли всех персонажей
+    
     public bool AreAllCharactersSucked()
     {
         foreach (Transform character in charactersInZone)
         {
             if (character.gameObject.activeSelf)
             {
-                return false; // Если хотя бы один персонаж активен, возвращаем false
+                return false; 
             }
         }
-        return true; // Все персонажи засосаны
+        return true;
     }
 }

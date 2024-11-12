@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class CrowdManager : MonoBehaviour
 {
-    public float speed = 5f; // Скорость движения толпы
-    public float followDistance = 1.5f; // Минимальное расстояние между членами толпы
-    public List<Rigidbody> crowdMembers = new List<Rigidbody>(); // Список всех персонажей в толпе
-    public static CrowdManager Instance; // Singleton для глобального доступа
+    public float speed = 5f; 
+    public float followDistance = 1.5f;
+    public List<Rigidbody> crowdMembers = new List<Rigidbody>(); 
+    public static CrowdManager Instance;
 
     [SerializeField] private float repuls;
     [SerializeField] private ParticleSystem deathParticles;
@@ -15,9 +15,8 @@ public class CrowdManager : MonoBehaviour
 
     bool isNeedToStopCrowd = false;
 
-    void Awake()
+    private void Awake()
     {
-        // Singleton
         if (Instance == null)
         {
             Instance = this;
@@ -31,18 +30,15 @@ public class CrowdManager : MonoBehaviour
 
     public bool IsLeader(GameObject member)
     {
-        // Логика проверки, является ли член толпы лидером
         return false;
     }
 
-    void Update()
+   private void Update()
     {
-        if (crowdMembers.Count == 0) return; // Проверка на наличие членов толпы
+        if (crowdMembers.Count == 0) return;
 
-        // Проверяем, удерживается ли левая кнопка мыши
         if (Input.GetMouseButton(0))
         {
-            // Определяем позицию курсора
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -51,7 +47,6 @@ public class CrowdManager : MonoBehaviour
                 target = hit.point;
                 target = new Vector3(target.x, 0, target.z);
 
-                // Двигаем первого персонажа к курсору
                 if (crowdMembers.Count > 0)
                 {
                     MoveToTarget(crowdMembers[0].gameObject, target);
@@ -59,7 +54,6 @@ public class CrowdManager : MonoBehaviour
 
                 if (isNeedToStopCrowd) return;
 
-                // Заставляем остальных следовать за предыдущими членами толпы
                 for (int i = 1; i < crowdMembers.Count; i++)
                 {
                     MoveToTarget(crowdMembers[i].gameObject, target);
@@ -68,7 +62,6 @@ public class CrowdManager : MonoBehaviour
         }
         else if (target != Vector3.zero)
         {
-            // Проверка, что толпа не пуста, чтобы двигать персонажей
             if (crowdMembers.Count > 0)
             {
                 MoveToTarget(crowdMembers[0].gameObject, target);
@@ -83,8 +76,7 @@ public class CrowdManager : MonoBehaviour
 
     }
 
-    // Функция для перемещения персонажа к цели
-    void MoveToTarget(GameObject follower, Vector3 targetPosition)
+    private void MoveToTarget(GameObject follower, Vector3 targetPosition)
     {
         Vector3 direction = (targetPosition - follower.transform.position);
         direction.y = 0;
@@ -116,8 +108,7 @@ public class CrowdManager : MonoBehaviour
         return 0.1f;
     }
 
-    // Метод для предотвращения столкновений с другими персонажами
-    void AvoidOthers(GameObject follower)
+    private void AvoidOthers(GameObject follower)
     {
         foreach (Rigidbody member in crowdMembers)
         {
@@ -134,14 +125,12 @@ public class CrowdManager : MonoBehaviour
         }
     }
 
-    // Добавление нового члена в толпу
     public void AddToCrowd(Rigidbody newMember)
     {
         crowdMembers.Add(newMember);
-        entityCounter.UpdateEntityCount(); // Обновляем счетчик после добавления
+        entityCounter.UpdateEntityCount();
     }
 
-    // Удаление персонажа из толпы
     public void RemoveFromCrowd(GameObject character)
     {
         Rigidbody rb = character.GetComponent<Rigidbody>();
@@ -152,7 +141,6 @@ public class CrowdManager : MonoBehaviour
             entityCounter.UpdateEntityCount();
             Debug.Log("Персонаж удален. Осталось персонажей: " + crowdMembers.Count);
 
-            // После удаления персонажа проверяем на проигрыш
             GameOverManager gameOverManager = FindObjectOfType<GameOverManager>();
             if (gameOverManager != null)
             {

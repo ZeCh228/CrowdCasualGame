@@ -6,7 +6,7 @@ public class MainMenu : MonoBehaviour
 {
     public Button playButton; 
 
-    void Start()
+    private void Start()
     {       
         playButton.onClick.AddListener(PlayGame);
     }

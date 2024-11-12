@@ -3,42 +3,42 @@ using UnityEngine;
 
 public class PassageZone : MonoBehaviour
 {
-    public TextMeshProUGUI counterText; // Текстовый элемент для отображения счётчика
-    public int maxPeople = 30; // Требуемое количество людей
-    public GameObject obstacle; // Препятствие, которое блокирует путь
+    public TextMeshProUGUI counterText; 
+    public int maxPeople = 30;
+    public GameObject obstacle;
 
-    private int currentPeople = 0; // Текущее количество людей в зоне
+    private int currentPeople = 0;
 
-    void Start()
+    private void Start()
     {
         UpdateCounterText();
-        obstacle.SetActive(true); // Препятствие активно, пока не набрано нужное количество людей
+        obstacle.SetActive(true);
     }
 
-    // Обновляем текст счётчика
-    void UpdateCounterText()
+ 
+    private void UpdateCounterText()
     {
         counterText.text = currentPeople + " / " + maxPeople;
     }
 
-    // Когда персонаж входит в зону
-    void OnTriggerEnter(Collider other)
+    
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             currentPeople++;
             UpdateCounterText();
 
-            // Проверяем, набрано ли достаточное количество людей
+            
             if (currentPeople >= maxPeople)
             {
-                AllowPassage(); // Разблокируем проход
+                AllowPassage();
             }
         }
     }
 
-    // Когда персонаж выходит из зоны
-    void OnTriggerExit(Collider other)
+  
+    private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -47,10 +47,9 @@ public class PassageZone : MonoBehaviour
         }
     }
 
-    // Разблокировка прохода
-    void AllowPassage()
+    private void AllowPassage()
     {
-        Debug.Log("Достигнуто требуемое количество людей, препятствие снято!");
-        obstacle.SetActive(false); // Убираем препятствие (например, дверь)
+        Debug.Log("Достигнуто требуемое количество людей");
+        obstacle.SetActive(false);
     }
 }
