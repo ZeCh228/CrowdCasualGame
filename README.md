@@ -2,7 +2,7 @@
 A creative prototype where you control a crowd of hand-drawn characters that must navigate obstacles and reach the finish line.
 
 ## 🎥 About the Game
-(Consider adding a link to the gameplay video here)
+
 
 In this prototype, you play as a crowd of characters that follow a leader. The crowd must avoid obstacles along the way, and if the leader dies, the next closest character becomes the new leader.
 
