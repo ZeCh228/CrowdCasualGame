@@ -26,3 +26,6 @@ Since this project was developed under tight time constraints, there are some li
 **Unfinished Features**: Lacks sound, animation, and particle effects, which were not completed within the time limit.
 
 ![Image alt](https://github.com/ZeCh228/CrowdCasualGame/blob/main/Unity_8gE6b4N12j.png)
+![Image alt](https://github.com/ZeCh228/CrowdCasualGame/blob/main/Unity_9a8zjY3Eq0.png)
+![Image alt](https://github.com/ZeCh228/CrowdCasualGame/blob/main/Unity_rZnH7beP6i.png)
+![Image alt](https://github.com/ZeCh228/CrowdCasualGame/blob/main/Unity_teL5vM0TLs.png)
