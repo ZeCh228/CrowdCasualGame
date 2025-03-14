@@ -24,3 +24,5 @@ Since this project was developed under tight time constraints, there are some li
 **Architecture**: The project has structural issues due to the rushed development process.
 **Visual Artifacts**: Some characters and dice have a white background, affecting the aesthetics.
 **Unfinished Features**: Lacks sound, animation, and particle effects, which were not completed within the time limit.
+
+![Image alt](https://github.com/ZeCh228/CrowdCasualGame/blob/main/Unity_8gE6b4N12j.png)
